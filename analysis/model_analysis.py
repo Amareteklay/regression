@@ -2,6 +2,7 @@
 import csv
 import json
 import math
+from .generate_descriptive_summary import summarize_full_panel
 from collections import defaultdict
 from dataclasses import dataclass
 from pathlib import Path
@@ -41,6 +42,54 @@ def slugify(value: str) -> str:
     cleaned = ''.join((ch.lower() if ch.isalnum() else '_') for ch in value)
     slug = cleaned.strip('_')
     return slug or 'scope'
+
+def term_variant(term: str, base: str) -> Optional[str]:
+    """Identify whether a term represents the count or binary variant for a base variable."""
+    binary_prefix = f"{base}__bin"
+    if term.startswith(binary_prefix):
+        return "binary"
+    if term == base or term.startswith(f"{base}_"):
+        return "count"
+    return None
+
+
+def filter_coefficients_by_selection(
+    coefficients: Iterable[Dict[str, float]],
+    selection_map: Optional[Dict[str, Dict[str, object]]],
+) -> List[Dict[str, float]]:
+    if not selection_map:
+        return list(coefficients)
+    filtered: List[Dict[str, float]] = []
+    for row in coefficients:
+        term = row.get("term", "")
+        include = True
+        for base, info in selection_map.items():
+            variant = term_variant(term, base)
+            if variant is None:
+                continue
+            include = variant == info.get("use")
+            break
+        if include:
+            filtered.append(row)
+    return filtered
+
+
+def load_variable_selection(project_root: Path) -> Dict[str, Dict[str, object]]:
+    summary_path = project_root / "analysis" / "descriptive_summary.json"
+    if summary_path.exists():
+        try:
+            data = json.loads(summary_path.read_text())
+            selection = data.get("variable_selection")
+            if selection:
+                return selection
+        except json.JSONDecodeError:
+            pass
+    data_path = project_root / "data" / "full_panel.csv"
+    summary = summarize_full_panel(data_path)
+    summary_path.write_text(json.dumps(summary, indent=2))
+    return summary.get("variable_selection", {})
+
+
 
 
 def parse_fixed_effects(field: str) -> Dict[str, Dict[str, float]]:
@@ -344,6 +393,7 @@ def run_analysis(
     top_n: int = 20,
     scope: Optional[str] = None,
     models: Optional[List[ModelResult]] = None,
+    variable_selection: Optional[Dict[str, Dict[str, object]]] = None,
 ) -> Dict[str, object]:
     output_dir.mkdir(parents=True, exist_ok=True)
     working_models = list(models) if models is not None else load_model_results(data_path)
@@ -391,7 +441,8 @@ def run_analysis(
     )
 
     coefficients = extract_coefficients(working_models)
-    coefficient_summary = compute_weighted_coefficients(coefficients)
+    filtered_coefficients = filter_coefficients_by_selection(coefficients, variable_selection)
+    coefficient_summary = compute_weighted_coefficients(filtered_coefficients)
     weighted_coefficients_path = output_dir / "weighted_coefficients.csv"
     write_csv(
         weighted_coefficients_path,
@@ -405,7 +456,7 @@ def run_analysis(
         coefficient_summary,
     )
 
-    importance = compute_variable_importance(coefficients)
+    importance = compute_variable_importance(filtered_coefficients)
     predictor_importance_path = output_dir / "predictor_importance.csv"
     write_csv(
         predictor_importance_path,
@@ -470,6 +521,7 @@ def run_analysis(
             "weighted_coefficients_svg": weighted_coefficients_svg,
             "predictor_importance_svg": predictor_importance_svg,
         },
+        "variable_selection": variable_selection,
     }
 
 
@@ -478,8 +530,12 @@ def run_scope_analyses(
     data_path: Path,
     base_output_dir: Path,
     top_n: int = 20,
+    variable_selection: Optional[Dict[str, Dict[str, object]]] = None,
 ) -> Dict[str, Dict[str, object]]:
     base_output_dir.mkdir(parents=True, exist_ok=True)
+    project_root = data_path.resolve().parents[1]
+    if variable_selection is None:
+        variable_selection = load_variable_selection(project_root)
     all_models = load_model_results(data_path)
     scopes = sorted({model.scope for model in all_models})
     results: Dict[str, Dict[str, object]] = {}
@@ -492,6 +548,7 @@ def run_scope_analyses(
             top_n=top_n,
             scope=scope,
             models=list(scope_models),
+            variable_selection=variable_selection,
         )
     return results
 

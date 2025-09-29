@@ -1,0 +1,10 @@
+
+<svg xmlns='http://www.w3.org/2000/svg' width='900' height='340'>
+    <style>
+        text { font-family: Arial, sans-serif; }
+    </style>
+    <rect x='0' y='0' width='900' height='340' fill='white' stroke='black' stroke-width='1'/>
+    <text x='450.0' y='30.0' text-anchor='middle' font-size='18'>Outbreak rate by continent</text>
+    <text x='450.0' y='310.0' text-anchor='middle' font-size='14'>Outbreak rate (%)</text>
+    <text x="190" y="85" text-anchor="end" font-size="14">Africa</text><rect x="200" y="70" width="640.00" height="20" fill="#4682b4" /><text x="845.0" y="85" font-size="12">35.1%</text><text x="190" y="125" text-anchor="end" font-size="14">America</text><rect x="200" y="110" width="483.61" height="20" fill="#4682b4" /><text x="688.6066971772933" y="125" font-size="12">26.5%</text><text x="190" y="165" text-anchor="end" font-size="14">Asia</text><rect x="200" y="150" width="478.87" height="20" fill="#4682b4" /><text x="683.8719057176677" y="165" font-size="12">26.3%</text><text x="190" y="205" text-anchor="end" font-size="14">Europe</text><rect x="200" y="190" width="347.04" height="20" fill="#4682b4" /><text x="552.037716175889" y="205" font-size="12">19.0%</text><text x="190" y="245" text-anchor="end" font-size="14">Oceania</text><rect x="200" y="230" width="188.54" height="20" fill="#4682b4" /><text x="393.54194949769214" y="245" font-size="12">10.3%</text>
+</svg>

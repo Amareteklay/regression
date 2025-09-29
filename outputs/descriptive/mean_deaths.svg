@@ -1,0 +1,10 @@
+
+<svg xmlns='http://www.w3.org/2000/svg' width='900' height='340'>
+    <style>
+        text { font-family: Arial, sans-serif; }
+    </style>
+    <rect x='0' y='0' width='900' height='340' fill='white' stroke='black' stroke-width='1'/>
+    <text x='450.0' y='30.0' text-anchor='middle' font-size='18'>Mean outbreak deaths by continent</text>
+    <text x='450.0' y='310.0' text-anchor='middle' font-size='14'>Deaths per country-year</text>
+    <text x="190" y="85" text-anchor="end" font-size="14">Africa</text><rect x="200" y="70" width="640.00" height="20" fill="#4682b4" /><text x="845.0" y="85" font-size="12">121.5</text><text x="190" y="125" text-anchor="end" font-size="14">America</text><rect x="200" y="110" width="165.65" height="20" fill="#4682b4" /><text x="370.64935381016096" y="125" font-size="12">31.5</text><text x="190" y="165" text-anchor="end" font-size="14">Asia</text><rect x="200" y="150" width="167.00" height="20" fill="#4682b4" /><text x="372.00294981566253" y="165" font-size="12">31.7</text><text x="190" y="205" text-anchor="end" font-size="14">Europe</text><rect x="200" y="190" width="3.35" height="20" fill="#4682b4" /><text x="208.34712552738782" y="205" font-size="12">0.6</text><text x="190" y="245" text-anchor="end" font-size="14">Oceania</text><rect x="200" y="230" width="0.12" height="20" fill="#4682b4" /><text x="205.12105636320814" y="245" font-size="12">0.0</text>
+</svg>

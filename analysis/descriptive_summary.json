@@ -1,0 +1,105 @@
+{
+  "threshold_share_gt1": 0.1,
+  "overall": {
+    "rows": 3221,
+    "years": [
+      "1990",
+      "1991",
+      "1992",
+      "1993",
+      "1994",
+      "1995",
+      "1996",
+      "1997",
+      "1998",
+      "1999",
+      "2000",
+      "2001",
+      "2002",
+      "2003",
+      "2004",
+      "2005",
+      "2006",
+      "2007",
+      "2008",
+      "2009",
+      "2010",
+      "2011",
+      "2012",
+      "2013"
+    ],
+    "countries": 145,
+    "continents": 5,
+    "outbreak_events": 877,
+    "cases_total": 4704085.0,
+    "deaths_total": 174020.0
+  },
+  "by_continent": [
+    {
+      "continent": "Africa",
+      "rows": 1085,
+      "outbreak_rate": 0.3511520737327189,
+      "outbreaks": 381,
+      "mean_cases": 2680.129953917051,
+      "mean_deaths": 121.53548387096774
+    },
+    {
+      "continent": "America",
+      "rows": 554,
+      "outbreak_rate": 0.26534296028880866,
+      "outbreaks": 147,
+      "mean_cases": 1092.1841155234656,
+      "mean_deaths": 31.45667870036101
+    },
+    {
+      "continent": "Asia",
+      "rows": 765,
+      "outbreak_rate": 0.2627450980392157,
+      "outbreaks": 201,
+      "mean_cases": 1208.5071895424837,
+      "mean_deaths": 31.71372549019608
+    },
+    {
+      "continent": "Europe",
+      "rows": 730,
+      "outbreak_rate": 0.19041095890410958,
+      "outbreaks": 139,
+      "mean_cases": 365.15616438356165,
+      "mean_deaths": 0.6356164383561644
+    },
+    {
+      "continent": "Oceania",
+      "rows": 87,
+      "outbreak_rate": 0.10344827586206896,
+      "outbreaks": 9,
+      "mean_cases": 0.022988505747126436,
+      "mean_deaths": 0.022988505747126436
+    }
+  ],
+  "variable_selection": {
+    "ECOLOGICAL": {
+      "use": "binary",
+      "nonzero_count": 141,
+      "gt1_count": 6,
+      "share_gt1": 0.0425531914893617
+    },
+    "GEOPHYSICAL": {
+      "use": "count",
+      "nonzero_count": 425,
+      "gt1_count": 159,
+      "share_gt1": 0.37411764705882355
+    },
+    "INTERSTATE": {
+      "use": "binary",
+      "nonzero_count": 75,
+      "gt1_count": 0,
+      "share_gt1": 0.0
+    },
+    "POISONING": {
+      "use": "binary",
+      "nonzero_count": 44,
+      "gt1_count": 4,
+      "share_gt1": 0.09090909090909091
+    }
+  }
+}
