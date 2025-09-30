@@ -1,0 +1,13 @@
+# Virtual environments
+.venv/
+
+# Python caches
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Local notebooks and reports artifacts
+.ipynb_checkpoints/
+
+# Misc
+.DS_Store

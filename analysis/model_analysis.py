@@ -43,6 +43,15 @@ def slugify(value: str) -> str:
     slug = cleaned.strip('_')
     return slug or 'scope'
 
+def normalize_label(label: str) -> str:
+    cleaned = label.replace('__bin', '')
+    cleaned = cleaned.replace('__', '_')
+    words = cleaned.replace('_', ' ').split()
+    if not words:
+        return label
+    return ' '.join(word.capitalize() for word in words)
+
+
 def term_variant(term: str, base: str) -> Optional[str]:
     """Identify whether a term represents the count or binary variant for a base variable."""
     binary_prefix = f"{base}__bin"
@@ -314,9 +323,10 @@ def create_bar_chart_svg(
         bar_width = value * scale
         text_y = margin_top + y * 40 + 25
         rect_y = margin_top + y * 40 + 10
+        pretty_label = normalize_label(label)
         return (
             f'<text x="{margin_left - 10}" y="{text_y}" text-anchor="end"'
-            f' font-size="14">{label}</text>'
+            f' font-size="14">{pretty_label}</text>'
             f'<rect x="{margin_left}" y="{rect_y}" width="{bar_width:.2f}" height="20" fill="#4682b4" />'
             f'<text x="{margin_left + bar_width + 5}" y="{text_y}" font-size="12">{value:.3f}</text>'
         )
@@ -358,8 +368,9 @@ def create_error_bar_chart_svg(
         err_width = error * scale
         line_start = center_x - err_width
         line_end = center_x + err_width
+        pretty_label = normalize_label(label)
         return (
-            f'<text x="{margin_left - 15}" y="{base_y + 5}" text-anchor="end" font-size="14">{label}</text>'
+            f'<text x="{margin_left - 15}" y="{base_y + 5}" text-anchor="end" font-size="14">{pretty_label}</text>'
             f'<line x1="{line_start:.2f}" y1="{base_y}" x2="{line_end:.2f}" y2="{base_y}" stroke="#000" stroke-width="2" />'
             f'<line x1="{line_start:.2f}" y1="{base_y - 6}" x2="{line_start:.2f}" y2="{base_y + 6}" stroke="#000" stroke-width="2" />'
             f'<line x1="{line_end:.2f}" y1="{base_y - 6}" x2="{line_end:.2f}" y2="{base_y + 6}" stroke="#000" stroke-width="2" />'
