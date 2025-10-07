@@ -1,0 +1,6 @@
+Continent,outbreaks,deaths,cases,observations,outbreak_rate
+Global,868,174018,4704083,3134,0.277
+Africa,381,131866,2907941,1085,0.351
+America,147,17427,605070,554,0.265
+Asia,201,24261,924508,765,0.263
+Europe,139,464,266564,730,0.19
